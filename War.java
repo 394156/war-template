@@ -19,11 +19,15 @@ public class War
     public War()
     {
         Deck mainDeck = new Deck();
+        //creates a deck
         mainDeck.initializeNewDeck();
+        //shuffles deck
         mainDeck.shuffle();
+        //splits deck into 2 different decks
         Deck[] bothDecks = mainDeck.dealDeck();
         Deck pl1 = bothDecks[1];
         Deck pl2 = bothDecks[0];
+        //runs event loop method
         this.runEventLoop(pl1, pl2);
     }
 
@@ -35,18 +39,24 @@ public class War
         Card p1; 
         Card p2;
         int turnCount = 1;
+        //runs while conditions are ok
         while(pl1.getDeckSize() > 0 && pl2.getDeckSize() > 0 && turnCount <= 300) {
             System.out.printf("Turn Count: %d\n", turnCount);
+            //prints deck size
             System.out.printf("Pl1 DECK SIZE: " + pl1.getDeckSize() + "\n");
             System.out.printf("Pl2 DECK SIZE: " + pl2.getDeckSize() + "\n");
+            //pulls card from deck
             p1 = pl1.dealCardFromDeck();
             p2 = pl2.dealCardFromDeck();
+            //prints out face n suit of each players top card
             System.out.printf("P1 Top Card: %s of %s\nP2 Top Card: %s of %s\n\n", 
                 p1.getFace(), p1.getSuit(), p2.getFace(), p2.getSuit());
-
+            
+            //calls war method
             if(p1.getRank() == p2.getRank()){
                 war(pl1, pl2, p1, p2);
             } else if(p1.getRank() > p2.getRank()){
+                //ads both top cards to 
                 pl1.addCardToDeck(p1);
                 pl1.addCardToDeck(p2);
             } else {
@@ -72,12 +82,12 @@ public class War
     public void war(Deck pl1, Deck pl2, Card p1, Card p2) {
         System.out.printf("--------WAR TIME--------\n\n");
         if(pl1.getDeckSize() >= 4 && pl2.getDeckSize() >= 4) {
-            Battlefield.addCardToDeck(p1);
+            Battlefield.addCardToDeck(p1); 
             Battlefield.addCardToDeck(p2);
+            //"takes out" 3 cards from each players deck
             for(int i = 0; i < 3; i++) {
                 Battlefield.addCardToDeck(pl1.dealCardFromDeck());
             }
-
             for(int i = 0; i < 3; i++) {
                 Battlefield.addCardToDeck(pl2.dealCardFromDeck());
             }
@@ -92,6 +102,7 @@ public class War
             System.out.printf("P1 Top Card: %s of %s\nP2 Top Card: %s of %s\n\n", 
                 p1Top.getFace(), p1Top.getSuit(), p2Top.getFace(), p2Top.getSuit());
             int size;
+            //compares the 4th card
             if(p1Top.getRank() == p2Top.getRank()) {
                 war(pl1, pl2, p1, p2);
             } else if (p1Top.getRank() > p2Top.getRank()) {
